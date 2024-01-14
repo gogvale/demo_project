@@ -1,6 +1,6 @@
 <?php
 
-namespace Gogvale\ShoppingCart\types;
+namespace ShoppingCart\types;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;

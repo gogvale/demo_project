@@ -1,12 +1,14 @@
 <?php
 
-namespace Gogvale\ShoppingCart\resolvers;
+namespace ShoppingCart\resolvers;
+
+use ShoppingCart\Database;
 
 class CartResolver
 {
 
-    public static function GetItemsByID($id)
+    public static function GetItemsByID($int)
     {
-        
+        $pdo = Database::getInstance();
     }
 }
