@@ -1,5 +1,22 @@
 {
-  "require": {
-    "webonyx/graphql-php": "v15.8.1"
-  }
+    "name": "gogvale/shopping-cart",
+    "description": "Shopping cart demo app",
+    "type": "project",
+    "require": {
+        "webonyx/graphql-php": "15.8.1",
+        "vlucas/phpdotenv": "5.6",
+      "ext-pdo": "*"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Gogvale\\ShoppingCart\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Gabriel Oliveira",
+            "email": "gabriel.oliveira@axented.com"
+        }
+    ]
 }
