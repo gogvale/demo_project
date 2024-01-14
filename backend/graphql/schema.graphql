@@ -1,0 +1,35 @@
+type Item {
+    id: ID!
+    title: String!
+    description: String!
+    image: String!
+    price: Int!
+    amount: Int!
+}
+
+type CartItem {
+    id: ID!
+    items_count: Int!
+    item: Item!
+}
+
+type Cart {
+    id: ID!
+    cart_items: [CartItem]!
+}
+
+type Query {
+    getCart(cartId: ID!): Cart
+    getItems: [Item]
+}
+
+type Mutation {
+    addToCart(cartId: ID!, itemId: ID!, itemsCount: Int!): CartItem
+    updateCartItem(cartItemId: ID!, newItemsCount: Int!): CartItem
+    deleteCartItem(cartItemId: ID!): Boolean
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}
