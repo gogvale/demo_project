@@ -11,22 +11,24 @@ type CartItem {
     id: ID!
     items_count: Int!
     item: Item!
+    total: Int!
 }
 
 type Cart {
     id: ID!
     cart_items: [CartItem]!
+    subtotal: Int!
 }
 
 type Query {
-    getCart(cartId: ID!): Cart
+    getCart(cartID: ID!): Cart
     getItems: [Item]
 }
 
 type Mutation {
-    addToCart(cartId: ID!, itemId: ID!, itemsCount: Int!): CartItem
-    updateCartItem(cartItemId: ID!, newItemsCount: Int!): CartItem
-    deleteCartItem(cartItemId: ID!): Boolean
+    addToCart(cartID: ID!, itemID: ID!, amount: Int!): Boolean
+    updateCartItem(cartItemID: ID!, amount: Int!): Boolean
+    deleteCartItem(cartItemID: ID!): Boolean
 }
 
 schema {
