@@ -4,90 +4,93 @@ use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\ObjectType;
 use ShoppingCart\Database;
 
+$db = new Database();
+
+// Define the Item type
 $itemType = new ObjectType([
     'name' => 'Item',
     'fields' => [
-        'id' => Type::nonNull(Type::id()),
-        'title' => Type::nonNull(Type::string()),
-        'description' => Type::nonNull(Type::string()),
-        'image' => Type::nonNull(Type::string()),
-        'price' => Type::nonNull(Type::int()),
-        'amount' => Type::nonNull(Type::int()),
+        'item_id' => Type::id(),
+        'title' => Type::string(),
+        'description' => Type::string(),
+        'image' => Type::string(),
+        'price' => Type::int(),
+        'amount' => Type::int(),
     ],
 ]);
 
+// Define the CartItem type
 $cartItemType = new ObjectType([
     'name' => 'CartItem',
     'fields' => [
-        'id' => Type::nonNull(Type::id()),
-        'items_count' => Type::nonNull(Type::int()),
-        'item' => Type::nonNull($itemType),
-        'total' => Type::nonNull(Type::int()),
+        'cart_item_id' => Type::id(),
+        'items_count' => Type::int(),
+        'item' => $itemType,
+        'total' => Type::int(),
     ],
 ]);
 
+// Define the Cart type
 $cartType = new ObjectType([
     'name' => 'Cart',
     'fields' => [
-        'id' => Type::nonNull(Type::id()),
-        'cart_items' => Type::nonNull(Type::listOf(Type::nonNull($cartItemType))),
-        'subtotal' => Type::nonNull(Type::int()),
+        'cart_id' => Type::id(),
+        'cart_items' => Type::listOf($cartItemType),
+        'subtotal' => Type::int(),
     ],
 ]);
 
+// Define the Query type
 $queryType = new ObjectType([
     'name' => 'Query',
     'fields' => [
         'getCart' => [
             'type' => $cartType,
             'args' => [
-                'cartID' => Type::nonNull(Type::id()),
+                'cartID' => Type::id(),
             ],
-            'resolve' => function ($rootValue, $args, $context) {
-                (new Database())->getCart($args['cartID']);
-            },
+            'resolve' => fn($root, $args) => $db->getCart($args['cartID']),
         ],
         'getItems' => [
-            'type' => Type::nonNull(Type::listOf(Type::nonNull($itemType))),
-            'resolve' => function () {
-                (new Database())->getCatalog();
-            },
+            'type' => Type::listOf($itemType),
+            'resolve' => fn() => $db->getCatalog(),
+        ],
+        'echo' => [
+            'type' => Type::string(),
+            'args' => [
+                'message' => Type::nonNull(Type::string()),
+            ],
+            'resolve' => fn($rootValue, array $args): string => $rootValue['prefix'] . $args['message'],
         ],
     ],
 ]);
-
+// Define the Mutation type
 $mutationType = new ObjectType([
     'name' => 'Mutation',
     'fields' => [
         'addToCart' => [
-            'type' => Type::nonNull(Type::boolean()),
+            'type' => Type::boolean(),
             'args' => [
-                'cartID' => Type::nonNull(Type::id()),
-                'itemID' => Type::nonNull(Type::id()),
-                'amount' => Type::nonNull(Type::int()),
+                'cartID' => Type::id(),
+                'itemID' => Type::id(),
+                'amount' => Type::int(),
             ],
-            'resolve' => function ($rootValue, $args, $context) {
-                (new Database())->addCartItem($args['cartID'], $args['itemID'], $args['amount']);
-            },
+            'resolve' => fn($root, $args) => $db->addCartItem($args['cartID'], $args['itemID'], $args['amount']),
         ],
         'updateCartItem' => [
-            'type' => Type::nonNull(Type::boolean()),
+            'type' => Type::boolean(),
             'args' => [
-                'cartItemID' => Type::nonNull(Type::id()),
-                'amount' => Type::nonNull(Type::int()),
+                'cartItemID' => Type::id(),
+                'amount' => Type::int(),
             ],
-            'resolve' => function ($rootValue, $args, $context) {
-                (new Database())->updateCartItem($args['cartItemID'],$args['amount']);
-            },
+            'resolve' => fn($root, $args) => $db->updateCartItem($args['cartItemID'], $args['amount']),
         ],
         'deleteCartItem' => [
-            'type' => Type::nonNull(Type::boolean()),
+            'type' => Type::boolean(),
             'args' => [
-                'cartItemID' => Type::nonNull(Type::id()),
+                'cartItemID' => Type::id(),
             ],
-            'resolve' => function ($rootValue, $args, $context) {
-                (new Database())->deleteCartItem($args['cartItemID']);
-            },
+            'resolve' => fn($root, $args) => $db->deleteCartItem($args['cartItemID']),
         ],
     ],
 ]);
