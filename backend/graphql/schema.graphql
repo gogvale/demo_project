@@ -1,5 +1,5 @@
 type Item {
-    id: ID!
+    item_id: ID!
     title: String!
     description: String!
     image: String!
@@ -8,14 +8,14 @@ type Item {
 }
 
 type CartItem {
-    id: ID!
+    cart_item_id: ID!
     items_count: Int!
     item: Item!
     total: Int!
 }
 
 type Cart {
-    id: ID!
+    cart_id: ID!
     cart_items: [CartItem]!
     subtotal: Int!
 }
