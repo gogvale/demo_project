@@ -13,27 +13,32 @@ import Navbar from "./components/Navbar.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Catalog/>,
+        element: <Navbar/>,
+        children: [
+            {
+                path: "/",
+                element: <Catalog/>,
+            },
+            {
+                path: "items",
+                element: <Catalog/>,
+            },
+            {
+                path: "items/:item_id",
+                element: <Item/>,
+            },
+            {
+                path: "cart",
+                element: <Cart/>,
+            },
+        ]
     },
-    {
-        path: "items",
-        element: <Catalog/>,
-    },
-    {
-        path: "items/:item_id",
-        element: <Item/>,
-    },
-    {
-        path: "cart",
-        element: <Cart/>,
-    },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <>
-            <Navbar/>
-            {/*Add some padding on the sides, make it like facebook*/}
             <RouterProvider router={router}/>
         </>
     </React.StrictMode>,

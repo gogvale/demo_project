@@ -1,10 +1,10 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCartShopping} from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 
 function Navbar() {
-    const Logo = styled.a`
+    const Logo = styled(Link)`
         font-family: "Caveat Brush", sans-serif;
         font-size: xxx-large;
         color: white;
@@ -31,14 +31,16 @@ function Navbar() {
         right: 0.4rem;
     `
     return (
+        <>
         <Banner>
-            <Logo href={'/'}>ShoppingDemo</Logo>
-            {/*TODO: Change links to Link*/}
-            <a href='/cart'>
+            <Logo to={'/'}>ShoppingDemo</Logo>
+            <Link to='/cart'>
                 <CartIcon icon={faCartShopping}/>
                 <Notification>12</Notification>
-            </a>
+            </Link>
         </Banner>
+            <Outlet/>
+        </>
     );
 }
 
