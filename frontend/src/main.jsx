@@ -8,7 +8,7 @@ import './index.css'
 import Catalog from "./pages/Catalog.jsx";
 import Item from "./pages/Item.jsx";
 import Cart from "./pages/Cart.jsx";
-import Navbar from "./components/Navbar.jsx";
+import Navbar from "./pages/Navbar.jsx";
 
 const router = createBrowserRouter([
     {

@@ -4,3 +4,6 @@ body,
 html {
     font-family: "Montserrat alternates";
 }
+a {
+    text-decoration: none;
+}

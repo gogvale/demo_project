@@ -11,10 +11,10 @@ function Navbar() {
     `
     const Banner = styled.div`
         background-color: #20A294;
-        padding: 1.5em;
+        padding: 0.3rem 2.5em;
         display: flex;
-        justify-content: space-around;
         align-items: center;
+        justify-content: space-between;
     `
     const CartIcon = styled(FontAwesomeIcon)`
         font-size: xx-large;
@@ -30,15 +30,17 @@ function Navbar() {
         top: -1.5rem;
         right: 0.4rem;
     `
+    const Cart = styled(Link)`
+    `
     return (
         <>
-        <Banner>
-            <Logo to={'/'}>ShoppingDemo</Logo>
-            <Link to='/cart'>
-                <CartIcon icon={faCartShopping}/>
-                <Notification>12</Notification>
-            </Link>
-        </Banner>
+            <Banner>
+                <Logo to={'/'}>ShoppingDemo</Logo>
+                <Cart to='/cart'>
+                    <CartIcon icon={faCartShopping}/>
+                    <Notification>12</Notification>
+                </Cart>
+            </Banner>
             <Outlet/>
         </>
     );
