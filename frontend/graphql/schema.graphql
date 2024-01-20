@@ -22,6 +22,7 @@ type Cart {
 
 type Query {
     getCart(cartID: ID!): Cart
+    getItem(item_id: ID!): Item
     getItems: [Item]
 }
 
