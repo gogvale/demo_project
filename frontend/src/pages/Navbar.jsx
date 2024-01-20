@@ -2,6 +2,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCartShopping} from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import {Link, Outlet} from "react-router-dom";
+import {graphql} from "relay-runtime";
+import {useLazyLoadQuery} from "react-relay";
 
 function Navbar() {
     const Logo = styled(Link)`
@@ -30,7 +32,18 @@ function Navbar() {
         top: -1.5rem;
         right: 0.4rem;
     `
-    const cartAmount = 10;
+    const query = graphql`
+        query NavbarGetCartQuery($cart_id: ID!){
+            getCart(cartID: $cart_id) {
+                cart_items{
+                    items_count
+                }
+            }
+        }
+
+    `
+    const response = useLazyLoadQuery(query, {cart_id: 1})
+    const cartAmount = response.getCart.cart_items.reduce((sum, item) => sum + item.items_count, 0);
     return (
         <>
             <Banner>
