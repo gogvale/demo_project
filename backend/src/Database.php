@@ -50,7 +50,7 @@ class Database
         $statement->bindParam(':id', $cartItemID, PDO::PARAM_INT);
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getCart($id)
@@ -66,7 +66,7 @@ class Database
             $items = self::getItemsByCartID($id);
             foreach (self::getCartItems($id) as &$cartItem){
                 $cart['cart_items'][] = $cartItem;
-                $cart['cart_items'][array_key_last($cart['cart_items'])]['items'] = self::getItemsByCartItemID($cartItem['cart_item_id']);
+                $cart['cart_items'][array_key_last($cart['cart_items'])]['item'] = self::getItemsByCartItemID($cartItem['cart_item_id']);
             }
             $cart['subtotal'] = array_sum(array_column($items, 'total'));
         }
@@ -134,5 +134,13 @@ class Database
         $statement = self::$pdo->prepare($query);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getItem($id)
+    {
+        $query = "SELECT * FROM items WHERE item_id = ?";
+        $statement = self::$pdo->prepare($query);
+        $statement->execute([$id]);
+        return $statement->fetch(PDO::FETCH_ASSOC);
     }
 }

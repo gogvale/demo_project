@@ -55,6 +55,13 @@ $queryType = new ObjectType([
             'type' => Type::listOf($itemType),
             'resolve' => fn() => $db->getCatalog(),
         ],
+        'getItem' => [
+            'type' => $itemType,
+            'args' => [
+                'item_id' => Type::nonNull(Type::id()),
+            ],
+            'resolve' => fn($rootValue, array $args) => $db->getItem($args['item_id']),
+        ],
         'echo' => [
             'type' => Type::string(),
             'args' => [
