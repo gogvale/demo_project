@@ -15,7 +15,9 @@ $schema = new Schema([
     'query' => $queryType,
     'mutation' => $mutationType,
 ]);
-
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
 // Handle GraphQL query
 try {
     $rawInput = file_get_contents('php://input');
@@ -26,6 +28,7 @@ try {
 
     $result = GraphQL::executeQuery($schema, $query, $rootValue, null, $variables);
     $output = $result->toArray();
+//    error_log("LOG: ".json_encode($output));
 } catch (\Exception $e) {
     $output = ['error' => $e->getMessage()];
 }
