@@ -30,16 +30,15 @@ function Navbar() {
         top: -1.5rem;
         right: 0.4rem;
     `
-    const Cart = styled(Link)`
-    `
+    const cartAmount = 10;
     return (
         <>
             <Banner>
                 <Logo to={'/'}>ShoppingDemo</Logo>
-                <Cart to='/cart'>
+                <Link to='/cart'>
                     <CartIcon icon={faCartShopping}/>
-                    <Notification>12</Notification>
-                </Cart>
+                    {(cartAmount > 0) && <Notification>{cartAmount}</Notification>}
+                </Link>
             </Banner>
             <Outlet/>
         </>

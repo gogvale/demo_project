@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import {Button, SecondaryButton} from "../components/Button.jsx";
 import {Link} from "react-router-dom";
+import Price from "../components/Price.jsx";
+import FlexContainer from "../components/FlexContainer.jsx";
 
 function Catalog() {
     const response = {
@@ -99,10 +101,6 @@ function Catalog() {
         gap: 20px; /* Adjust the gap between columns */
         flex-grow: 1;
     `
-    const FlexContainer = styled.div`
-        margin: 2em;
-        display: flex;
-    `
 
     const GridItem = styled(Link)`
         border: 1px solid #ccc;
@@ -133,20 +131,15 @@ function Catalog() {
         margin-right: 3em;
         width: 15em;
     `
-    const Price = styled.span`
-        font-weight: bold;
-        font-size: xx-large;
-        align-self: end;
-        margin-bottom: 1rem;
-    `
+
     const items = response.data.getItems.map((item) => <GridItem to={`/items/${item.item_id}`} key={item.item_id}>
             <img height={150} src={item.image} alt={item.title + ' image'}/>
             <h2>{item.title}</h2>
-            <Price>${(item.price / 100).toLocaleString()}</Price>
+            <Price item={item}/>
             {
                 item.amount < 1 ?
                     <span style="color: red;">Out of stock</span> :
-                    <Button onClick={console.log(`Clicked buy ${item.title}`)}>Buy now</Button>
+                    <Button>Buy now</Button>
             }
 
         </GridItem>

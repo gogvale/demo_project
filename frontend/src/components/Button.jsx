@@ -12,6 +12,11 @@ const Button = styled.button`
     &:hover {
         cursor: pointer;
     }
+    &:disabled {
+        background-color: #d3d3d3; /* Light gray */
+        color: #555;
+        cursor: not-allowed;
+    }
 `
 const SecondaryButton = styled(Button)`
     background-color: #1043A1;
