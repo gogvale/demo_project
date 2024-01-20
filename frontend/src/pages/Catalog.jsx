@@ -1,10 +1,11 @@
 import styled from "styled-components";
-import {Button, SecondaryButton} from "../components/Button.jsx";
+import {Button} from "../components/Button.jsx";
 import {Link} from "react-router-dom";
 import Price from "../components/Price.jsx";
 import FlexContainer from "../components/FlexContainer.jsx";
 
 function Catalog() {
+    // console.log(`Backend API: ${import.meta.env.VITE_GRAPHQL_API_ENDPOINT}`)
     const response = {
         "data": {
             "getItems": [
