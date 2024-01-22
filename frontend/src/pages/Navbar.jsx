@@ -1,37 +1,13 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCartShopping} from "@fortawesome/free-solid-svg-icons";
-import styled from "styled-components";
 import {Link, Outlet} from "react-router-dom";
 import {graphql} from "relay-runtime";
 import {useLazyLoadQuery} from "react-relay";
+import Banner from "../components/styled/Banner.jsx";
+import Logo from "../components/styled/Logo.jsx";
+import CartIcon from "../components/styled/CartIcon.jsx";
+import Notification from "../components/styled/Notification.jsx";
 
 function Navbar() {
-    const Logo = styled(Link)`
-        font-family: "Caveat Brush", sans-serif;
-        font-size: xxx-large;
-        color: white;
-    `
-    const Banner = styled.div`
-        background-color: #20A294;
-        padding: 0.3rem 2.5em;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    `
-    const CartIcon = styled(FontAwesomeIcon)`
-        font-size: xx-large;
-        color: whitesmoke;
-    `
-    const Notification = styled.span`
-        background-color: #F16600;
-        border-radius: 50%;
-        color: white;
-        padding: 2px 6px;
-        font-weight: bold;
-        position: relative;
-        top: -1.5rem;
-        right: 0.4rem;
-    `
     const query = graphql`
         query NavbarGetCartQuery($cart_id: ID!){
             getCart(cartID: $cart_id) {

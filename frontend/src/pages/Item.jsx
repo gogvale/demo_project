@@ -1,9 +1,9 @@
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import Price from "../components/Price.jsx";
-import {Button, SecondaryButton} from "../components/Button.jsx";
-import FlexContainer from "../components/FlexContainer.jsx";
+import Price from "../components/styled/Price.jsx";
+import {Button, SecondaryButton} from "../components/styled/Button.jsx";
+import FlexContainer from "../components/styled/FlexContainer.jsx";
 import {graphql} from "relay-runtime";
 import {useLazyLoadQuery} from "react-relay";
 import {useLocation} from 'react-router-dom';
