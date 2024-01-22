@@ -1,6 +1,6 @@
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
 
-const HTTP_ENDPOINT = "http://localhost:8000/";
+const HTTP_ENDPOINT = `http://${import.meta.env.VITE_GRAPHQL_API_ENDPOINT}/`;
 
 const fetchFn = async (request, variables) => {
   const resp = await fetch(HTTP_ENDPOINT, {
