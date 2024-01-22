@@ -7,6 +7,8 @@ import FlexContainer from "../components/styled/FlexContainer.jsx";
 import {graphql} from "relay-runtime";
 import {useLazyLoadQuery, useMutation} from "react-relay";
 import {useLocation} from 'react-router-dom';
+import {useState} from "react";
+import {SuccessMessage} from "../components/Popup.jsx";
 
 function Item() {
     const ItemGetItemQuery = graphql`
@@ -31,6 +33,8 @@ function Item() {
             addToCart(cartID: $cartID, itemID: $itemID, amount: $amount)
         }
     `)
+    const [showMessage, changeShow] = useState(false)
+    const [message, changeMessage] = useState(null)
 
     function addToCart() {
         if (outOfStock) return false;
@@ -41,7 +45,8 @@ function Item() {
                 amount: 1
             }, onCompleted: (response, errors) => {
                 if (!errors) {
-                    // TODO: Send success message and block button (?)
+                    changeMessage("Item added to cart successfully!")
+                    changeShow(true)
                 }
             },
         })
@@ -64,7 +69,14 @@ function Item() {
                     {outOfStock ? <span style={{color: 'red'}}>Sold out</span> :
                         <small style={{color: 'grey'}}>({item.amount} left)</small>}
                     <div className="buttons">
-                        <Button disabled={outOfStock}>Buy Now</Button>
+                        <Button
+                            onClick={() => {
+                                changeMessage("Bought successfully!");
+                                changeShow(true)
+                            }}
+                            disabled={outOfStock}>
+                            Buy Now
+                        </Button>
                         <SecondaryButton
                             disabled={outOfStock}
                             onClick={() => addToCart()}>
@@ -73,6 +85,7 @@ function Item() {
                     </div>
                 </div>
             </FlexContainer>
+            {showMessage && <SuccessMessage message={message} onClose={() => changeShow(false)}/>}
         </>
     );
 }
