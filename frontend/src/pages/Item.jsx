@@ -5,7 +5,7 @@ import Price from "../components/styled/Price.jsx";
 import {Button, SecondaryButton} from "../components/styled/Button.jsx";
 import FlexContainer from "../components/styled/FlexContainer.jsx";
 import {graphql} from "relay-runtime";
-import {useLazyLoadQuery} from "react-relay";
+import {useLazyLoadQuery, useMutation} from "react-relay";
 import {useLocation} from 'react-router-dom';
 
 function Item() {
@@ -25,6 +25,29 @@ function Item() {
     const response = useLazyLoadQuery(ItemGetItemQuery, {item_id: item_id});
     const item = response.getItem
     const outOfStock = item.amount === 0;
+
+    const [addCartItem] = useMutation(graphql`
+        mutation ItemAddToCartMutation($cartID: ID!, $itemID: ID!, $amount: Int!) {
+            addToCart(cartID: $cartID, itemID: $itemID, amount: $amount)
+        }
+    `)
+
+    function addToCart() {
+        if (outOfStock) return false;
+        addCartItem({
+            variables: {
+                cartID: 1,
+                itemID: item_id,
+                amount: 1
+            }, onCompleted: (response, errors) => {
+                if (!errors) {
+                    // TODO: Send success message and block button (?)
+                }
+            },
+        })
+        return true
+    }
+
     return (
         <>
             <div>
@@ -42,7 +65,11 @@ function Item() {
                         <small style={{color: 'grey'}}>({item.amount} left)</small>}
                     <div className="buttons">
                         <Button disabled={outOfStock}>Buy Now</Button>
-                        <SecondaryButton disabled={outOfStock}>Add to cart</SecondaryButton>
+                        <SecondaryButton
+                            disabled={outOfStock}
+                            onClick={() => addToCart()}>
+                            Add to cart
+                        </SecondaryButton>
                     </div>
                 </div>
             </FlexContainer>

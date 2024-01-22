@@ -9,7 +9,8 @@ const Item = ({item}) => <GridItem to={`/items/${item.item_id}`}>
     <Price item={item}/>
     {
         item.amount < 1 ?
-            <span style="color: red;">Out of stock</span> :
+            <span style={{color: 'red'}}>Out of stock</span> :
+            // TODO: Add a success banner message
             <Button>Buy now</Button>
     }
 
